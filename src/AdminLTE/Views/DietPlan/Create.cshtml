@@ -1,0 +1,235 @@
+﻿@{ ViewData["Title"] = "Generate Diet Plan"; }
+@model Profile
+<h2 class="display-5 pl-4">@ViewData["Title"].</h2>
+<h3 class="display-6 pl-4">Generate Your Diet Plan In just few steps.</h3>
+
+<link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard_theme_arrows.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/jquery.smartWizard.min.js"></script>
+
+<style>
+   
+
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0rem rgba(0,123,255,.25)
+    }
+
+    .btn-secondary:focus {
+        box-shadow: 0 0 0 0rem rgba(108,117,125,.5)
+    }
+
+    .close:focus {
+        box-shadow: 0 0 0 0rem rgba(108,117,125,.5)
+    }
+
+    .mt-200 {
+        margin-top: 200px
+    }
+</style>
+<div class="container">
+    <div class="row" style="display: flex; justify-content: end;">
+        <a class="btn btn-outline-success" asp-action="Index" asp-controller="DietPlan">Get Back to List</a>
+    </div>
+    <div class="row d-flex justify-content-center mt-200"> <button  type="button" id="clickIt" class="btn btn-primary" data-toggle="modal"  data-target="#exampleModal"> Launch Diet Planner </button> </div> <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Smart Wizard modal</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                </div>
+                <div class="modal-body">
+                    <form id="DietPlanForm" asp-controller="DietPlan" asp-action="Create"  method="post" enctype="multipart/form-data">
+                        <input hidden name="Id" asp-for="Id"  />
+                        <div id="smartwizard">
+                            <ul>
+                                <li><a href="#step-1">Step 1<br /><small>Basic Info</small></a></li>
+                                <li><a href="#step-2">Step 2<br /><small>Physical Info</small></a></li>
+                                <li><a href="#step-3">Step 3<br /><small>Place Info</small></a></li>
+                                <li><a href="#step-4">Step 4<br /><small>Occupation details</small></a></li>
+                                <li><a href="#step-5">Step 5<br /><small> Pre-existing condition</small></a></li>
+                                <li><a href="#step-6">Step 6<br /><small> Water Intake</small></a></li>
+                                <li><a href="#step-7">Step 7<br /><small> Calorie Intake</small></a></li>
+                                <li><a href="#step-8">Step 8<br /><small> Goals</small></a></li>
+                                <li><a href="#step-9">Step 9<br /><small> Submit</small></a></li>
+                            </ul>
+                            <div class="mt-4">
+                                <div id="step-1">
+                                    <div class="row">
+                                        <h4 class="p-4">Lets start with your basic information</h4>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6"><label>Age</label> <input type="text" name="Age" asp-for="Age" class="form-control" placeholder="Age" required> </div>
+                                        <div class="col-md-6">
+                                            <label>Gender</label>
+                                            <select name="Gender" class="form-control" asp-for="Gender" placeholder="Gender" required>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div id="step-2">
+                                    <div class="row">
+                                        <h4 class="p-4">Your Height & Weight</h4>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-6">  <label>Height(m)</label><input type="number" onchange="GoalRecommendation();" id="Height" asp-for="Height" name="Height" class="form-control" placeholder="Height in cm" required> </div>
+                                        <div class="col-md-6">  <label>Weight(Kg)</label><input type="number" onchange="GoalRecommendation();" id="Weight" asp-for="Weight" name="Weight" class="form-control" placeholder="Weight in Kgs" required> </div>
+                                    </div>
+                                </div>
+                                <div id="step-3" class="">
+                                    <div class="row">
+                                        <h4 class="p-4">Where do you live?</h4>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12"> <label>Place</label> <input type="text" asp-for="Place" name="Place" class="form-control" placeholder="Name of Place" required> </div>
+
+                                    </div>
+                                </div>
+                                <div id="step-4" class="">
+                                    <div class="row">
+                                        <h4 class="p-4">What do you do for a living?</h4>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12"> <label>Occupation</label> <input type="text" asp-for="Occupation" name="Occupation" class="form-control" placeholder="Occupation" required> </div>
+
+                                    </div>
+                                </div>
+                                <div id="step-5" class="">
+                                    <div class="row">
+                                        <h4 class="p-4">Do you have any Pre-existing conditions?</h4>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Diabetes</label>
+                                            <select name="Diabetes" class="form-control" asp-for="Diabetes" placeholder="Diabetes" required>
+                                                <option value="No">No</option>
+                                                <option value="Yes">Yes</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Hypertension</label>
+                                            <select name="Hypertension" class="form-control" asp-for="Hypertension" placeholder="Hypertension" required>
+                                                <option value="No">No</option>
+                                                <option value="Yes">Yes</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-3">
+                                        <div class="col-md-6" hidden>
+                                            <label>Liver/Kidney Disease</label>
+                                            <select name="LiverKidneyDiseases" class="form-control" asp-for="LIverKidneyDiseases" placeholder="Liver/Kidney Diseases" required>
+                                                <option value="No">No</option>
+                                                <option value="Yes">Yes</option>
+
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-6">  <label>Other Disease</label><input type="text" name="OtherDiseases" asp-for="OtherDiseases" class="form-control" placeholder="Other Diseases" required> </div>
+                                    </div>
+
+
+
+                                </div>
+                                <div id="step-6" class="">
+                                    <div class="row">
+                                        <h4 class="p-4">Your daily water intake?</h4>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12"> <label>Water Intake(cup)</label> <input type="number" asp-for="WaterIntake" name="WaterIntake" class="form-control" placeholder="Water Intake" required> </div>
+
+                                    </div>
+                                </div>
+                                <div id="step-7" class="">
+                                    <div class="row">
+                                        <h4 class="p-4">Your daily Calorie intake?</h4>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12"> <label>Calorie Intake</label> <input type="number" asp-for="CalorieIntake" name="CalorieIntake" class="form-control" placeholder="Calorie Intake" required> </div>
+
+                                    </div>
+                                </div>
+                                <div id="step-8" class="">
+                                    <div class="row">
+                                        <h4 class="p-4">Goals with Diet Plan?</h4>
+                                        <h5 id="recommendation" class="text-success"></h5>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>Goals</label>
+                                            <select name="ReasonForDietPlan" class="form-control" asp-for="ReasonForDietPlan" required>
+                                                <option value="WeightLoss">Weight Loss</option>
+                                                <option value="Fitness">Fitness</option>
+                                                <option value="MuscleGain">Muscle Gain</option>
+
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div id="step-9" class="">
+                                    <div class="row d-flex justify-content-center mt-100">
+                                        <button type="submit" class="btn btn-primary btn-circle btn-lg"> Generate Diet Plan </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                </div>
+        </div>
+    </div>
+</div>
+    </div>
+
+<script>
+    $(document).ready(function () {
+        $("#clickIt").click();
+        $('#smartwizard').smartWizard({
+            selected: 0,
+            theme: 'arrows',
+            autoAdjustHeight: true,
+            transitionEffect: 'fade',
+            showStepURLhash: false,
+
+        });
+
+    });
+</script>
+
+<script>
+    function GoalRecommendation() {
+        debugger;
+        var height = $("#Height").val();
+        var weight = $("#Weight").val();
+        
+
+       var BMI = Number(weight) / (Number(height) * Number(height))
+        if (Number(BMI) < 19) {
+            var recommend = "Recommended Diet Plan: Muscle Gain "
+            $("#recommendation").text(recommend);
+        }
+
+        if (Number(BMI) >= 19 && Number(BMI)<=24) {
+            var recommend = "Recommended Diet Plan: Fitness "
+            $("#recommendation").text(recommend);
+        }
+
+        if (Number(BMI) > 24) {
+            var recommend = "Recommended Diet Plan: Weight Loss "
+            $("#recommendation").text(recommend);
+        }
+
+
+    }
+
+
+</script>
