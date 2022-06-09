@@ -1,4 +1,5 @@
-﻿<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+﻿@model BMI
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 <!-- Nucleo Icons -->
 <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
 <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
@@ -75,9 +76,8 @@
 
         #submit:hover {
             background-color: #0a8ef2;
-        }
-
-    .text {
+        } 
+ .text {
         display: inline-block;
         margin: 5px 20px 5px 8px;
         ;
@@ -174,26 +174,28 @@
 
 
 <h3><b>B</b>ody <b>M</b>ass <b>I</b>ndex Calculator</h3>
-<form class="form" id="form" onsubmit="return validateForm()">
+<form class="form" enctype="multipart/form-data" asp-action="Index" asp-controller="BMI" id="form" >
     <div class="row-one">
-        <input type="text" class="text-input" id="age" autocomplete="off" required /><p class="text">Age</p>
+        <input type="text" class="text-input" id="age" asp-for="Age" autocomplete="off" required /><p class="text">Age</p>
         <label class="container">
-            <input type="radio" name="radio" id="f"><p class="text">Female</p>
+            <input type="radio" name="gender"  value="Female" id="f"><p class="text">Female</p>
             <span class="checkmark"></span>
         </label>
         <label class="container">
-            <input type="radio" name="radio" id="m"><p class="text">Male</p>
+            <input type="radio" name="gender" value="Male" id="m"><p class="text">Male</p>
             <span class="checkmark"></span>
         </label>
     </div>
 
     <div class="row-two">
-        <input type="text" class="text-input" id="height" autocomplete="off" required><p class="text">Height (cm)</p>
-        <input type="text" class="text-input" id="weight" autocomplete="off" required><p class="text">Weight (kg)</p>
+        <input type="text" class="text-input" asp-for="Height" id="height" autocomplete="off" required><p class="text">Height (cm)</p>
+        <input type="text" class="text-input" asp-for="Weight" id="weight" autocomplete="off" required><p class="text">Weight (kg)</p>
+        <input hidden asp-for="BMIValue" id="BMI" />
     </div>
-    <button type="button" id="submit">Submit</button>
+    <button type="button" onclick="return validateForm();" id="submit">Submit</button>
+    <input type="submit"  class="btn btn-success btn-lg" disabled style="width: 220px; margin-top: 20px; margin-left: 115px;" value="Save"   id="Save"/>
 </form>
-<div id="Answer" style="margin-top:50px">
+<div id="Answer" style="margin-top:200px">
 
 </div>
 
@@ -210,8 +212,10 @@
         if (age.value == '' || height.value == '' || weight.value == '' || (male.checked == false && female.checked == false)) {
             alert("All fields are required!");
             document.getElementById("submit").removeEventListener("click", countBmi);
+            $("#Save").attr("disabled",true);
         } else {
             countBmi();
+            $("#Save").removeAttr("disabled");
         }
     }
     document.getElementById("submit").addEventListener("click", validateForm);
@@ -223,7 +227,7 @@
         } else if (female.checked) {
             p.push("female");
         }
-        form.reset();
+        //form.reset();
         var bmi = Number(p[2]) / (Number(p[1]) / 100 * Number(p[1]) / 100);
 
         var result = '';
@@ -245,11 +249,13 @@
         var t = document.createTextNode(result);
         var b = document.createTextNode('BMI: ');
         var r = document.createTextNode(parseFloat(bmi).toFixed(2));
-
+        alert(r);
+        $("#BMI").val(parseFloat(bmi).toFixed(2));
+        alert($("#BMI").val());
         h1.appendChild(t);
         h2.appendChild(b);
         h2.appendChild(r);
-
+        $("#Answer").empty();
         document.getElementById("Answer").appendChild(h1);
         document.getElementById("Answer").appendChild(h2);
         document.getElementById("submit").removeEventListener("click", countBmi);

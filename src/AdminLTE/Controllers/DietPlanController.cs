@@ -1,5 +1,6 @@
 ﻿using AdminLTE.Data;
 using AdminLTE.Models;
+using AdminLTE.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,10 +15,11 @@ namespace AdminLTE.Controllers
     public class DietPlanController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
-
-        public DietPlanController(ApplicationDbContext dbContext)
+        private readonly IEmailSender _mailService;
+        public DietPlanController(ApplicationDbContext dbContext, IEmailSender mailService)
         {
             _dbContext = dbContext;
+            _mailService = mailService;
         }
         public IActionResult Index()
         {
@@ -90,9 +92,15 @@ namespace AdminLTE.Controllers
                 obj.Date = DateTime.Now;
                 _dbContext.Profile.Add(obj);
                 _dbContext.SaveChanges();
-
+                
 
                 GenerateDietPlan(obj);
+                string ToEmail = _dbContext.Users.Where(a=>Convert.ToString(a.Id)==userId).FirstOrDefault().Email;
+                MailRequest email = new MailRequest();
+                email.Subject = "Diet Plan";
+                email.ToEmail = ToEmail;
+                email.Body = "Diet Plan is Created Successfully you can visit your portal ";
+                 SendMail(email);
             }
             else
             {
@@ -240,7 +248,7 @@ namespace AdminLTE.Controllers
                 }
             }
 
-
+            
             return Ok();
         }
 
@@ -1087,6 +1095,19 @@ namespace AdminLTE.Controllers
 
         }
 
+        [HttpPost("send")]
+        public async Task<IActionResult> SendMail(MailRequest request)
+        {
+            try
+            {
+                await _mailService.SendEmailAsync(request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
 
+        }
     }
 }

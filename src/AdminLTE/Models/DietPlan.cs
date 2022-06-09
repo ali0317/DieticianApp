@@ -20,6 +20,9 @@ namespace AdminLTE.Models
         
         public decimal RequiredCalorieIntake{ get; set; }
         public DateTime CreatedDate { get; set; }
+        public string UserId { get; set; }
+
+
         public int ProfileId { get; set; }
       
 

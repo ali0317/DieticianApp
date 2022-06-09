@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using AdminLTE.Models;
+using System.Threading.Tasks;
 
 namespace AdminLTE.Services
 {
@@ -11,6 +12,11 @@ namespace AdminLTE.Services
         {
             // Plug in your email service here to send an email.
             return Task.FromResult(0);
+        }
+
+        public Task SendEmailAsync(MailRequest mailRequest)
+        {
+            throw new System.NotImplementedException();
         }
 
         public Task SendSmsAsync(string number, string message)

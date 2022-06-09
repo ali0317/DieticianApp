@@ -44,14 +44,14 @@ namespace AdminLTE
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            services.AddTransient<IEmailSender, EmailSender>();
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, AppClaimsPrincipalFactory>();
             services.AddScoped<SignInManager<ApplicationUser>, AuditableSignInManager<ApplicationUser>>();
-
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             var mvcBuilder = services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder()
@@ -68,8 +68,9 @@ namespace AdminLTE
             });
 
             // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
+            //services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }

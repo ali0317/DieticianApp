@@ -158,7 +158,7 @@ namespace AdminLTE.Common
                         Type = SidebarMenuType.Link,
                         Name = "BMI Calculator",
                         IconClassName = "fas fa-calculator",
-                        URLPath = "#",
+                        URLPath = "/BMI/Index",
                         LinkCounter = counter,
                     };
                 default:

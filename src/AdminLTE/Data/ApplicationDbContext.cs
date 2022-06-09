@@ -9,6 +9,7 @@ namespace AdminLTE.Data
         public DbSet<UserAudit> UserAuditEvents { get; set; }
         public DbSet<Profile> Profile { get; set; }
         public DbSet<DietPlan> DietPlan { get; set; }
+        public DbSet<BMI> BMI { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

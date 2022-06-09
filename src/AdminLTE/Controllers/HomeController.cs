@@ -1,4 +1,5 @@
 ﻿using AdminLTE.Common.Attributes;
+using AdminLTE.Data;
 using AdminLTE.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,16 +8,33 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Claims;
 
 namespace AdminLTE.Controllers
 {
     public class HomeController : BaseController
     {
+        private readonly ApplicationDbContext _dbContext;
+
+        public HomeController(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
         [HelpDefinition]
         public IActionResult Index()
         {
-            AddPageHeader("Dashboard", "");
-            return View();
+            AddPageHeader("My Dashboard", "");
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            var userId = claim.Value;
+            DashboardVm vm = new DashboardVm();
+            vm.DietPlan = _dbContext.DietPlan.Where(a => a.UserId == userId).OrderByDescending(a => a.Id).FirstOrDefault();
+            vm.BMIList = _dbContext.BMI.Where(a => a.UserId == userId).Take(10).OrderByDescending(a=>a.Id).ToList();
+            if (vm.DietPlan == null)
+            {
+                vm.DietPlan = new DietPlan();
+            }
+            return View(vm);
         }
 
         [HttpPost]

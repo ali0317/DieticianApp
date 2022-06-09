@@ -8,7 +8,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/jquery.smartWizard.min.js"></script>
 
 <style>
-   
+
 
     .form-control:focus {
         color: #495057;
@@ -30,20 +30,21 @@
         margin-top: 200px
     }
 </style>
-<div class="container">
-    <div class="row" style="display: flex; justify-content: end;">
-        <a class="btn btn-outline-success" asp-action="Index" asp-controller="DietPlan">Get Back to List</a>
-    </div>
-    <div class="row d-flex justify-content-center mt-200"> <button  type="button" id="clickIt" class="btn btn-primary" data-toggle="modal"  data-target="#exampleModal"> Launch Diet Planner </button> </div> <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Smart Wizard modal</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
-                </div>
-                <div class="modal-body">
-                    <form id="DietPlanForm" asp-controller="DietPlan" asp-action="Create"  method="post" enctype="multipart/form-data">
-                        <input hidden name="Id" asp-for="Id"  />
+<form id="DietPlanForm" asp-controller="DietPlan" asp-action="Create"  enctype="multipart/form-data">
+    <div class="container">
+        <div class="row" style="display: flex; justify-content: end;">
+            <a class="btn btn-outline-success" asp-action="Index" asp-controller="DietPlan">Get Back to List</a>
+        </div>
+        <div class="row d-flex justify-content-center mt-200"> <button type="button" id="clickIt" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> Launch Diet Planner </button> </div> <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Smart Wizard modal</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <input hidden name="Id" asp-for="Id" />
                         <div id="smartwizard">
                             <ul>
                                 <li><a href="#step-1">Step 1<br /><small>Basic Info</small></a></li>
@@ -80,8 +81,8 @@
                                     </div>
                                     <div class="row">
 
-                                        <div class="col-md-6">  <label>Height(m)</label><input type="number" onchange="GoalRecommendation();" id="Height" asp-for="Height" name="Height" class="form-control" placeholder="Height in cm" required> </div>
-                                        <div class="col-md-6">  <label>Weight(Kg)</label><input type="number" onchange="GoalRecommendation();" id="Weight" asp-for="Weight" name="Weight" class="form-control" placeholder="Weight in Kgs" required> </div>
+                                        <div class="col-md-6">  <label>Height(m)</label><input  onchange="GoalRecommendation();" id="Height" asp-for="Height" name="Height" class="form-control" placeholder="Height in cm" /> </div>
+                                        <div class="col-md-6">  <label>Weight(Kg)</label><input type="number" onchange="GoalRecommendation();" id="Weight" asp-for="Weight" name="Weight" class="form-control" placeholder="Weight in Kgs" /> </div>
                                     </div>
                                 </div>
                                 <div id="step-3" class="">
@@ -134,7 +135,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-md-6">  <label>Other Disease</label><input type="text" name="OtherDiseases" asp-for="OtherDiseases" class="form-control" placeholder="Other Diseases" required> </div>
+                                        <div class="col-md-6">  <label>Other Disease</label><input type="text" name="OtherDiseases" asp-for="OtherDiseases" class="form-control" placeholder="Other Diseases" > </div>
                                     </div>
 
 
@@ -178,18 +179,18 @@
                                 </div>
                                 <div id="step-9" class="">
                                     <div class="row d-flex justify-content-center mt-100">
-                                        <button type="submit" class="btn btn-primary btn-circle btn-lg"> Generate Diet Plan </button>
+                                        <button type="submit" asp-controller="DietPlan" asp-action="Create" class="btn btn-primary btn-circle btn-lg"> Generate Diet Plan </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        </form>
+
+                    </div>
                 </div>
+            </div>
         </div>
     </div>
-</div>
-    </div>
-
+</form>
 <script>
     $(document).ready(function () {
         $("#clickIt").click();
@@ -210,15 +211,15 @@
         debugger;
         var height = $("#Height").val();
         var weight = $("#Weight").val();
-        
 
-       var BMI = Number(weight) / (Number(height) * Number(height))
+
+        var BMI = Number(weight) / (Number(height) * Number(height))
         if (Number(BMI) < 19) {
             var recommend = "Recommended Diet Plan: Muscle Gain "
             $("#recommendation").text(recommend);
         }
 
-        if (Number(BMI) >= 19 && Number(BMI)<=24) {
+        if (Number(BMI) >= 19 && Number(BMI) <= 24) {
             var recommend = "Recommended Diet Plan: Fitness "
             $("#recommendation").text(recommend);
         }
