@@ -29,7 +29,7 @@ namespace AdminLTE.Controllers
                         join b in _dbContext.DietPlan on a.Id equals b.ProfileId
                         select new DietPlanListVM
                         {
-                            Id = a.Id,
+                            Id = b.Id,
                             Date = a.Date,
                             Weight = a.Weight,
                             Height = a.Height,
@@ -66,6 +66,16 @@ namespace AdminLTE.Controllers
             
         }
 
+        [HttpGet]
+        public IActionResult Details(int Id)
+        {
+            DietPlan model = _dbContext.DietPlan.Find(Id);
+            var a = _dbContext.Profile.Where(a => a.Id == model.ProfileId).FirstOrDefault();
+            ViewBag.BMIValue = a.Weight / (a.Height * a.Height);
+
+            return View(model);
+        }
+
         [HttpPost]
         public IActionResult Create(IFormCollection collection)
         {
@@ -92,15 +102,17 @@ namespace AdminLTE.Controllers
                 obj.Date = DateTime.Now;
                 _dbContext.Profile.Add(obj);
                 _dbContext.SaveChanges();
-                
 
+                int Id = obj.Id;
                 GenerateDietPlan(obj);
-                string ToEmail = _dbContext.Users.Where(a=>Convert.ToString(a.Id)==userId).FirstOrDefault().Email;
-                MailRequest email = new MailRequest();
-                email.Subject = "Diet Plan";
-                email.ToEmail = ToEmail;
-                email.Body = "Diet Plan is Created Successfully you can visit your portal ";
-                 SendMail(email);
+
+                return RedirectToAction(nameof(Details), new { Id = obj.Id });
+                //string ToEmail = _dbContext.Users.Where(a=>Convert.ToString(a.Id)==userId).FirstOrDefault().Email;
+                //MailRequest email = new MailRequest();
+                //email.Subject = "Diet Plan";
+                //email.ToEmail = ToEmail;
+                //email.Body = "Diet Plan is Created Successfully you can visit your portal ";
+                // SendMail(email);
             }
             else
             {
@@ -125,14 +137,18 @@ namespace AdminLTE.Controllers
 
                 var deletePreviousPlan = _dbContext.DietPlan.Where(a => a.ProfileId==obj.Id).FirstOrDefault();
 
+                if (deletePreviousPlan != null) { 
                 _dbContext.DietPlan.Remove(deletePreviousPlan);
                 _dbContext.SaveChanges();
+                }
 
                 GenerateDietPlan(obj);
-
+               
+               
+                return RedirectToAction(nameof(Details), new { Id = obj.Id });
             }
-
-            return RedirectToAction(nameof(Index));
+            
+           
         }
 
 
@@ -288,6 +304,7 @@ namespace AdminLTE.Controllers
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
             model.CreatedDate = DateTime.Now;
+            model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
 
@@ -344,6 +361,7 @@ namespace AdminLTE.Controllers
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
             model.CreatedDate = DateTime.Now;
+            model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
 
@@ -395,6 +413,7 @@ namespace AdminLTE.Controllers
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
             model.CreatedDate = DateTime.Now;
+            model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
            
@@ -428,6 +447,7 @@ namespace AdminLTE.Controllers
             model.WaterIntake = PerDayWaterIntake;
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
+            model.UserId = instance.UserId;
             model.CreatedDate = DateTime.Now;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
@@ -477,6 +497,7 @@ namespace AdminLTE.Controllers
             model.WaterIntake = PerDayWaterIntake;
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
+            model.UserId = instance.UserId;
             model.CreatedDate = DateTime.Now;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
@@ -527,6 +548,7 @@ namespace AdminLTE.Controllers
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
             model.CreatedDate = DateTime.Now;
+            model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
            
@@ -562,6 +584,7 @@ namespace AdminLTE.Controllers
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
             model.CreatedDate = DateTime.Now;
+            model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
 
@@ -622,6 +645,7 @@ namespace AdminLTE.Controllers
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
             model.CreatedDate = DateTime.Now;
+            model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
 
@@ -672,6 +696,7 @@ namespace AdminLTE.Controllers
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
             model.CreatedDate = DateTime.Now;
+            model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
 
@@ -707,6 +732,7 @@ namespace AdminLTE.Controllers
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
             model.CreatedDate = DateTime.Now;
+            model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
 
@@ -758,6 +784,7 @@ namespace AdminLTE.Controllers
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
             model.CreatedDate = DateTime.Now;
+            model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
 
@@ -811,6 +838,7 @@ namespace AdminLTE.Controllers
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
             model.CreatedDate = DateTime.Now;
+            model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
 
@@ -847,6 +875,7 @@ namespace AdminLTE.Controllers
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
             model.CreatedDate = DateTime.Now;
+            model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
 
@@ -905,6 +934,7 @@ namespace AdminLTE.Controllers
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
             model.CreatedDate = DateTime.Now;
+            model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
 
@@ -954,6 +984,7 @@ namespace AdminLTE.Controllers
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
             model.CreatedDate = DateTime.Now;
+            model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
 
@@ -987,6 +1018,7 @@ namespace AdminLTE.Controllers
             model.WaterIntake = PerDayWaterIntake;
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
+            model.UserId = instance.UserId;
             model.CreatedDate = DateTime.Now;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
@@ -1038,6 +1070,7 @@ namespace AdminLTE.Controllers
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
             model.CreatedDate = DateTime.Now;
+            model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
 
@@ -1090,6 +1123,7 @@ namespace AdminLTE.Controllers
             model.RequiredCalorieIntake = RequiredCalorieIntake;
             model.ProfileId = instance.Id;
             model.CreatedDate = DateTime.Now;
+            model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
 

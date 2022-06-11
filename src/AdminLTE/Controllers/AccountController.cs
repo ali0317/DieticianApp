@@ -139,7 +139,7 @@ namespace AdminLTE.Controllers
                     await _userManager.AddClaimAsync(user, new Claim(CustomClaimTypes.GivenName, user.FirstName));
                     await _userManager.AddClaimAsync(user, new Claim(CustomClaimTypes.Surname, user.LastName));
                     await _userManager.AddClaimAsync(user, new Claim(CustomClaimTypes.AvatarURL, user.AvatarURL));
-                    IdentityRole role = await roleManager.FindByIdAsync("6fce880b-a88f-4cdc-a148-f5b4065eca7d");
+                    IdentityRole role = await roleManager.FindByNameAsync("Customer");
                     
                     result1 = await roleManager.UpdateAsync(role);
 

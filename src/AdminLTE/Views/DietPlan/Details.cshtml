@@ -1,0 +1,130 @@
+﻿@model DietPlan
+
+
+
+<div style="display:flex;justify-content:center;align-items:center;width:100%">
+
+    <div class="card" style="width: 100%">
+        <div class="card-body">
+
+            <div class="row">
+                <h4 class="pl-2">Recommended daily nutrients intake:</h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card" id="flip" style="background: rgb(2,0,36); background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(144,172,9,1) 0%, rgba(255,192,0,1) 100%); cursor: pointer;">
+                        <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;">
+                            <img src="~/icons8-protein-supplement-48.png" /><label class="display-6">Protiens: &nbsp; @Model.Proteins   &nbsp;grams</label>
+
+
+                        </div>
+                    </div>
+
+                    <div id="panel" class="card" style="display: none;">
+                        <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;  ">
+                            <p>
+                                Protein-rich foods include Eggs, Cheese, Beef, Chicken, Fish.
+                                Proteins are essential for growth and maintainence. They help in
+                                building body mass as muscles, and regulate various chemical
+                                reactions inside the body.
+                            </p>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card" id="flip1" style="background: rgb(2,0,36); background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,26,238,0.8883928571428571) 0%, rgba(70,185,244,1) 100%); cursor: pointer; ">
+                        <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;">
+                            <img src="~/icons8-carbohydrates-48.png" /> <label class="display-6">Carbohydrates: &nbsp; @Model.Carbohydrates &nbsp;grams</label>
+
+
+                        </div>
+                    </div>
+                    <div id="panel1" class="card" style="display: none;">
+                        <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;  ">
+                            <p>
+                                Carbohydrate-rich foods include Wheat, Barley, Corn,
+                                Rice, Oatmeal, Barley and fruits. Carbohydrates are an
+                                essential energy source for body cells. They prevent breakdown of
+                                proteins and fats for use in energy.
+                            </p>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card" id="flip2" style="background: rgb(2,0,36); background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,155,26,1) 0%, rgba(229,244,70,1) 100%); cursor: pointer; ">
+                        <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;">
+                            <img src="~/icons8-olive-oil-bottle-48.png" /><label class="display-6">Fats: &nbsp; @Model.Fats  &nbsp;grams</label>
+
+
+                        </div>
+                    </div>
+                    <div id="panel2" class="card" style="display: none;">
+                        <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;  ">
+                            <p>
+                                Fats-rich foods include Whole eggs, Cheese, Chocolate, Olive Oil.
+                                Fats act as energy reservoirs for excees energy. Also help in storage of
+                                fat-soluble Vitamins (A, D, E, K).
+                            </p>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card" id="flip3" style="background: rgb(2,0,36); background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(102,26,255,1) 0%, rgba(70,244,230,1) 100%); cursor: pointer;">
+                        <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;">
+                            <img src="~/icons8-water-cooler-48.png" /><label class="display-6">Water Intake:&nbsp; @Model.WaterIntake  &nbsp;cups</label>
+
+
+                        </div>
+                    </div>
+                    <div id="panel3" class="card" style="display: none;">
+                        <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;  ">
+                            <p>
+                                Water is essential for life itself. In the human body water provides an internal milieu
+                                for body metabolism. It is a major constituent of blood and regulates blood pressure. It also transports
+                                nutrients and wastes to and from body cells.
+                            </p>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <h5 class="pl-2 pl-3">Your Current Body Mass Index is :&nbsp;<b class="text-primary">@ViewBag.BMIValue.ToString("#.##") </b></h5>
+
+                </div>
+
+            </div>
+            <a type="button" asp-action="Index" asp-controller="DietPlan" class="btn btn-outline-primary float-right">Diet Plans List</a>
+        </div>
+    </div>
+</div>
+
+
+<script>$(document).ready(function () {
+
+
+    });
+
+    $("#flip").hover(function () {
+        $("#panel").slideToggle("slow");
+    });
+
+    $("#flip1").hover(function () {
+        $("#panel1").slideToggle("slow");
+    });
+    $("#flip2").hover(function () {
+        $("#panel2").slideToggle("slow");
+    });
+    $("#flip3").hover(function () {
+        $("#panel3").slideToggle("slow");
+    });</script>

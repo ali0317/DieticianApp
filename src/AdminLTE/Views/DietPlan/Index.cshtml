@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <div class="card" id="flip" style="background: rgb(2,0,36); background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(144,172,9,1) 0%, rgba(255,192,0,1) 100%); cursor: pointer;">
+                                                <div class="card flip" id="flip" style="background: rgb(2,0,36); background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(144,172,9,1) 0%, rgba(255,192,0,1) 100%); cursor: pointer;">
                                                     <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;">
                                                         <img src="~/icons8-protein-supplement-48.png" /><label class="display-6">Protiens: &nbsp; @item.Proteins  &nbsp;grams</label>
 
@@ -73,7 +73,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div id="panel" class="card" style="display: none;">
+                                                <div id="panel" class="card panel" style="display: none;">
                                                     <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;  ">
                                                         <p>
                                                             Protein-rich foods include Eggs, Cheese, Beef, Chicken, Fish.
@@ -87,14 +87,14 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
-                                                <div class="card" id="flip1" style="background: rgb(2,0,36); background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,26,238,0.8883928571428571) 0%, rgba(70,185,244,1) 100%); cursor: pointer; ">
+                                                <div class="card flip1" id="flip1" style="background: rgb(2,0,36); background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,26,238,0.8883928571428571) 0%, rgba(70,185,244,1) 100%); cursor: pointer; ">
                                                     <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;">
                                                         <img src="~/icons8-carbohydrates-48.png" /> <label class="display-6">Carbohydrates: &nbsp; @item.Carbohydrates &nbsp;grams</label>
 
 
                                                     </div>
                                                 </div>
-                                                <div id="panel1" class="card" style="display: none;">
+                                                <div id="panel1" class="card panel1" style="display: none;">
                                                     <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;  ">
                                                         <p>
                                                             Carbohydrate-rich foods include Wheat, Barley, Corn,
@@ -111,14 +111,14 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <div class="card" id="flip2" style="background: rgb(2,0,36); background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,155,26,1) 0%, rgba(229,244,70,1) 100%); cursor: pointer; ">
+                                                <div class="card flip2" id="flip2" style="background: rgb(2,0,36); background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,155,26,1) 0%, rgba(229,244,70,1) 100%); cursor: pointer; ">
                                                     <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;">
                                                         <img src="~/icons8-olive-oil-bottle-48.png" /><label class="display-6">Fats: &nbsp; @item.Fats &nbsp;grams</label>
 
 
                                                     </div>
                                                 </div>
-                                                <div id="panel2" class="card" style="display: none;">
+                                                <div id="panel2" class="card panel2" style="display: none;">
                                                     <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;  ">
                                                         <p>
                                                             Fats-rich foods include Whole eggs, Cheese, Chocolate, Olive Oil.
@@ -131,14 +131,14 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
-                                                <div class="card" id="flip3" style="background: rgb(2,0,36); background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(102,26,255,1) 0%, rgba(70,244,230,1) 100%); cursor: pointer;">
+                                                <div class="card flip3" id="flip3" style="background: rgb(2,0,36); background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(102,26,255,1) 0%, rgba(70,244,230,1) 100%); cursor: pointer;">
                                                     <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;">
                                                         <img src="~/icons8-water-cooler-48.png" /><label class="display-6">Water Intake:&nbsp; @item.RequiredwaterIntake &nbsp;cups</label>
 
 
                                                     </div>
                                                 </div>
-                                                <div id="panel3" class="card" style="display: none;">
+                                                <div id="panel3" class="card panel3" style="display: none;">
                                                     <div class="card-body" style="padding-top: 15px; padding-bottom: 5px;  ">
                                                         <p>
                                                             Water is essential for life itself. In the human body water provides an internal milieu
@@ -184,17 +184,17 @@
 
         });
 
-        $("#flip").click(function () {
-            $("#panel").slideToggle("slow");
+        $(".flip").click(function () {
+            $(".panel").slideToggle("slow");
         });
 
-        $("#flip1").click(function () {
-            $("#panel1").slideToggle("slow");
+        $(".flip1").click(function () {
+            $(".panel1").slideToggle("slow");
         });
-        $("#flip2").click(function () {
-            $("#panel2").slideToggle("slow");
+        $(".flip2").click(function () {
+            $(".panel2").slideToggle("slow");
         });
-        $("#flip3").click(function () {
-            $("#panel3").slideToggle("slow");
+        $(".flip3").click(function () {
+            $(".panel3").slideToggle("slow");
         });
     </script>

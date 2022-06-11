@@ -24,7 +24,7 @@ namespace AdminLTE.ViewComponents
             //{
             //}
 
-            sidebars.Add(ModuleHelper.AddHeader("MAIN NAVIGATION"));
+            //sidebars.Add(ModuleHelper.AddHeader("MAIN NAVIGATION"));
             sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.Home));
             sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.GenerateDietPlan));
             sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.ChatBot));
