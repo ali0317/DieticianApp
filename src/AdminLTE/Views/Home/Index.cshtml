@@ -85,27 +85,27 @@
     </div>
 
 </div>
-<div class="row">
+<div class="row" style="padding:1%">
    
-    <table class="table table-hover table-primary" style=" border-radius: 12px; border: 3px solid blue;">
+    <table class="table table-hover table-primary table-bordered" @*style=" border-radius: 12px; border: 3px solid blue;"*@>
         <thead>
             <tr>
-                <th scope="col">Id</th>
+                <th scope="col" style="width:70px ; text-align:center" >Sr.</th>
                 <th scope="col">Age</th>
-                <th scope="col">Weight</th>
-                <th scope="col">Height</th>
-                <th scope="col">BMI</th>
+                <th scope="col" style=" text-align:right" >Weight</th>
+                <th scope="col"style=" text-align:right" >Height</th>
+                <th scope="col"style=" text-align:right" title="BMI Calculator"><a target="_blank" asp-controller="BMI" asp-action="Index">BMI</a></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.BMIList)
             {<tr>
                 
-                <td>@item.Id</td>
+                <td style=" text-align:center">@item.Id</td>
                 <td>@item.Age years old </td>
-                <td>@item.Weight KG</td>
-                <td>@item.Height m</td>
-                <td>@item.BMIValue </td>
+                <td style=" text-align:right">@item.Weight KG</td>
+                <td style=" text-align:right">@item.Height cm</td>
+                <td style=" text-align:right">@item.BMIValue </td>
             </tr>
             }
             @if (Model.BMIList.Count == 0)

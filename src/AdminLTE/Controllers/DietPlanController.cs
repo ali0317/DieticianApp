@@ -69,7 +69,7 @@ namespace AdminLTE.Controllers
         [HttpGet]
         public IActionResult Details(int Id)
         {
-            DietPlan model = _dbContext.DietPlan.Find(Id);
+            DietPlan model = _dbContext.DietPlan.Where(a => a.Id == Id).FirstOrDefault();
             var a = _dbContext.Profile.Where(a => a.Id == model.ProfileId).FirstOrDefault();
             ViewBag.BMIValue = a.Weight / (a.Height * a.Height);
 
@@ -103,10 +103,10 @@ namespace AdminLTE.Controllers
                 _dbContext.Profile.Add(obj);
                 _dbContext.SaveChanges();
 
-                int Id = obj.Id;
-                GenerateDietPlan(obj);
+               
+              int Id =  GenerateDietPlan(obj);
 
-                return RedirectToAction(nameof(Details), new { Id = obj.Id });
+                return RedirectToAction(nameof(Details), new { Id = Id });
                 //string ToEmail = _dbContext.Users.Where(a=>Convert.ToString(a.Id)==userId).FirstOrDefault().Email;
                 //MailRequest email = new MailRequest();
                 //email.Subject = "Diet Plan";
@@ -142,10 +142,10 @@ namespace AdminLTE.Controllers
                 _dbContext.SaveChanges();
                 }
 
-                GenerateDietPlan(obj);
+                int Id = GenerateDietPlan(obj); 
                
                
-                return RedirectToAction(nameof(Details), new { Id = obj.Id });
+                return RedirectToAction(nameof(Details), new { Id = Id });
             }
             
            
@@ -153,23 +153,24 @@ namespace AdminLTE.Controllers
 
 
 
-        public IActionResult GenerateDietPlan(Profile instance)
+        public int GenerateDietPlan(Profile instance)
         {
+            int modelId = 0;
             if(instance.ReasonForDietPlan== "Fitness")
             {
                 if(instance.Gender== "male")
                 {
                     if(Convert.ToInt32(instance.Age)>=19 && Convert.ToInt32(instance.Age) <= 30)
                     {
-                        FitenessMale1(instance);
+                    modelId=    FitenessMale1(instance);
                     }
                     if (Convert.ToInt32(instance.Age) >= 31 && Convert.ToInt32(instance.Age) <= 59)
                     {
-                        FitenessMale2(instance);
+                        modelId = FitenessMale2(instance);
                     }
                     if (Convert.ToInt32(instance.Age) >= 60)
                     {
-                        FitenessMale3(instance);
+                        modelId = FitenessMale3(instance);
                     }
 
 
@@ -178,15 +179,15 @@ namespace AdminLTE.Controllers
                 {
                     if (Convert.ToInt32(instance.Age) >= 19 && Convert.ToInt32(instance.Age) <= 30)
                     {
-                        FitenessFemale1(instance);
+                        modelId = FitenessFemale1(instance);
                     }
                     if (Convert.ToInt32(instance.Age) >= 31 && Convert.ToInt32(instance.Age) <= 59)
                     {
-                        FitenessFemale2(instance);
+                        modelId = FitenessFemale2(instance);
                     }
                     if (Convert.ToInt32(instance.Age) >= 60)
                     {
-                        FitenessFemale3(instance);
+                        modelId = FitenessFemale3(instance);
                     }
                 }
 
@@ -197,15 +198,15 @@ namespace AdminLTE.Controllers
                 {
                     if (Convert.ToInt32(instance.Age) >= 19 && Convert.ToInt32(instance.Age) <= 30)
                     {
-                        WeightLossMale1(instance);
+                        modelId = WeightLossMale1(instance);
                     }
                     if (Convert.ToInt32(instance.Age) >= 31 && Convert.ToInt32(instance.Age) <= 59)
                     {
-                        WeightLossMale2(instance);
+                        modelId = WeightLossMale2(instance);
                     }
                     if (Convert.ToInt32(instance.Age) >= 60)
                     {
-                        WeightLossMale3(instance);
+                        modelId = WeightLossMale3(instance);
                     }
 
 
@@ -214,15 +215,15 @@ namespace AdminLTE.Controllers
                 {
                     if (Convert.ToInt32(instance.Age) >= 19 && Convert.ToInt32(instance.Age) <= 30)
                     {
-                        WeightLossFemale1(instance);
+                        modelId = WeightLossFemale1(instance);
                     }
                     if (Convert.ToInt32(instance.Age) >= 31 && Convert.ToInt32(instance.Age) <= 59)
                     {
-                        WeightLossFemale2(instance);
+                        modelId = WeightLossFemale2(instance);
                     }
                     if (Convert.ToInt32(instance.Age) >= 60)
                     {
-                        WeightLossFemale3(instance);
+                        modelId = WeightLossFemale3(instance);
                     }
                 }
 
@@ -234,15 +235,15 @@ namespace AdminLTE.Controllers
                 {
                     if (Convert.ToInt32(instance.Age) >= 19 && Convert.ToInt32(instance.Age) <= 30)
                     {
-                        MuscleGainMale1(instance);
+                        modelId = MuscleGainMale1(instance);
                     }
                     if (Convert.ToInt32(instance.Age) >= 31 && Convert.ToInt32(instance.Age) <= 59)
                     {
-                        MuscleGainMale2(instance);
+                        modelId = MuscleGainMale2(instance);
                     }
                     if (Convert.ToInt32(instance.Age) >= 60)
                     {
-                        MuscleGainMale3(instance);
+                        modelId = MuscleGainMale3(instance);
                     }
 
 
@@ -251,24 +252,24 @@ namespace AdminLTE.Controllers
                 {
                     if (Convert.ToInt32(instance.Age) >= 19 && Convert.ToInt32(instance.Age) <= 30)
                     {
-                        MuscleGainFemale1(instance);
+                        modelId = MuscleGainFemale1(instance);
                     }
                     if (Convert.ToInt32(instance.Age) >= 31 && Convert.ToInt32(instance.Age) <= 59)
                     {
-                        MuscleGainFemale2(instance);
+                        modelId = MuscleGainFemale2(instance);
                     }
                     if (Convert.ToInt32(instance.Age) >= 60)
                     {
-                        MuscleGainFemale3(instance);
+                        modelId = MuscleGainFemale3(instance);
                     }
                 }
             }
 
-            
-            return Ok();
+
+            return modelId;
         }
 
-        public void FitenessMale1(Profile instance) {
+        public int FitenessMale1(Profile instance) {
             var RequiredCalorieIntake = 3000; // Daily Calorie Intake for this category
 
             var Carbs = (RequiredCalorieIntake * 55) / 100;
@@ -307,7 +308,7 @@ namespace AdminLTE.Controllers
             model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
-
+            return model.Id;
 
 
 
@@ -315,7 +316,7 @@ namespace AdminLTE.Controllers
 
 
         }
-        public void FitenessMale2(Profile instance)
+        public int FitenessMale2(Profile instance)
         {
             var RequiredCalorieIntake = 2500;// Daily Calorie Intake for this category
 
@@ -364,10 +365,11 @@ namespace AdminLTE.Controllers
             model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
+            return model.Id;
 
-       
+
         }
-        public void FitenessMale3(Profile instance)
+        public int FitenessMale3(Profile instance)
         {
             var RequiredCalorieIntake = 2000;// Daily Calorie Intake for this category
 
@@ -416,10 +418,11 @@ namespace AdminLTE.Controllers
             model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
-           
+            return model.Id;
+
         }
 
-        public void FitenessFemale1(Profile instance)
+        public int FitenessFemale1(Profile instance)
         {
             var RequiredCalorieIntake = 2400;// Daily Calorie Intake for this category
             var Carbs = (RequiredCalorieIntake * 55) / 100;
@@ -451,9 +454,10 @@ namespace AdminLTE.Controllers
             model.CreatedDate = DateTime.Now;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
-           
+            return model.Id;
+
         }
-        public void FitenessFemale2(Profile instance)
+        public int FitenessFemale2(Profile instance)
         {
             var RequiredCalorieIntake = 2000;
 
@@ -501,9 +505,10 @@ namespace AdminLTE.Controllers
             model.CreatedDate = DateTime.Now;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
-          
+            return model.Id;
+
         }
-        public void FitenessFemale3(Profile instance)
+        public int FitenessFemale3(Profile instance)
         {
             var RequiredCalorieIntake = 1600;
 
@@ -551,10 +556,11 @@ namespace AdminLTE.Controllers
             model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
-           
+            return model.Id;
+
         }
 
-        public void MuscleGainMale1(Profile instance)
+        public int MuscleGainMale1(Profile instance)
         {
             var RequiredCalorieIntake = 3000+500; // Daily Calorie Intake for this category
 
@@ -588,14 +594,14 @@ namespace AdminLTE.Controllers
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
 
-
+            return model.Id;
 
 
 
 
 
         }
-        public void MuscleGainMale2(Profile instance)
+        public int MuscleGainMale2(Profile instance)
         {
             var RequiredCalorieIntake = 2500 + 500;// Daily Calorie Intake for this category
 
@@ -648,10 +654,11 @@ namespace AdminLTE.Controllers
             model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
+            return model.Id;
 
 
         }
-        public void MuscleGainMale3(Profile instance)
+        public int MuscleGainMale3(Profile instance)
         {
             var RequiredCalorieIntake = 2000 + 500;// Daily Calorie Intake for this category
 
@@ -699,10 +706,11 @@ namespace AdminLTE.Controllers
             model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
+            return model.Id;
 
         }
 
-        public void MuscleGainFemale1(Profile instance)
+        public int MuscleGainFemale1(Profile instance)
         {
             var RequiredCalorieIntake = 2400 + 500;// Daily Calorie Intake for this category
 
@@ -735,9 +743,10 @@ namespace AdminLTE.Controllers
             model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
+            return model.Id;
 
         }
-        public void MuscleGainFemale2(Profile instance)
+        public int MuscleGainFemale2(Profile instance)
         {
             var RequiredCalorieIntake = 2000 + 500;
 
@@ -787,9 +796,10 @@ namespace AdminLTE.Controllers
             model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
+            return model.Id;
 
         }
-        public void MuscleGainFemale3(Profile instance)
+        public int MuscleGainFemale3(Profile instance)
         {
             var RequiredCalorieIntake = 1600 + 500;
 
@@ -841,9 +851,10 @@ namespace AdminLTE.Controllers
             model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
+            return model.Id;
 
         }
-        public void WeightLossMale1(Profile instance)
+        public int WeightLossMale1(Profile instance)
         {
             var RequiredCalorieIntake = 3000 - 500; // Daily Calorie Intake for this category
 
@@ -878,7 +889,7 @@ namespace AdminLTE.Controllers
             model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
-
+            return model.Id;
 
 
 
@@ -886,7 +897,7 @@ namespace AdminLTE.Controllers
 
 
         }
-        public void WeightLossMale2(Profile instance)
+        public int WeightLossMale2(Profile instance)
         {
             var RequiredCalorieIntake = 2500 - 500;// Daily Calorie Intake for this category
 
@@ -937,10 +948,10 @@ namespace AdminLTE.Controllers
             model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
-
+            return model.Id;
 
         }
-        public void WeightLossMale3(Profile instance)
+        public int WeightLossMale3(Profile instance)
         {
             var RequiredCalorieIntake = 2000 - 500;// Daily Calorie Intake for this category
 
@@ -987,10 +998,11 @@ namespace AdminLTE.Controllers
             model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
+            return model.Id;
 
         }
 
-        public void WeightLossFemale1(Profile instance)
+        public int WeightLossFemale1(Profile instance)
         {
             var RequiredCalorieIntake = 2400 - 500;// Daily Calorie Intake for this category
 
@@ -1022,9 +1034,10 @@ namespace AdminLTE.Controllers
             model.CreatedDate = DateTime.Now;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
+            return model.Id;
 
         }
-        public void WeightLossFemale2(Profile instance)
+        public int WeightLossFemale2(Profile instance)
         {
             var RequiredCalorieIntake = 2000 - 500;
 
@@ -1073,9 +1086,10 @@ namespace AdminLTE.Controllers
             model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
+            return model.Id;
 
         }
-        public void WeightLossFemale3(Profile instance)
+        public int WeightLossFemale3(Profile instance)
         {
             var RequiredCalorieIntake = 1600 - 500;
 
@@ -1126,6 +1140,8 @@ namespace AdminLTE.Controllers
             model.UserId = instance.UserId;
             _dbContext.DietPlan.Add(model);
             _dbContext.SaveChanges();
+
+            return model.Id;
 
         }
 

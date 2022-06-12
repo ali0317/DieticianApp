@@ -63,7 +63,7 @@
                                         <h4 class="p-4">Lets start with your basic information</h4>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6"><label>Age</label> <input type="text" name="Age" asp-for="Age" class="form-control" placeholder="Age" required> </div>
+                                        <div class="col-md-6"><label>Age</label> <input type="text" autocomplete="off" name="Age" asp-for="Age" class="form-control" placeholder="Age" required> </div>
                                         <div class="col-md-6">
                                             <label>Gender</label>
                                             <select name="Gender" class="form-control" asp-for="Gender" placeholder="Gender" required>
@@ -81,8 +81,8 @@
                                     </div>
                                     <div class="row">
 
-                                        <div class="col-md-6">  <label>Height(m)</label><input  onchange="GoalRecommendation();" id="Height" asp-for="Height" name="Height" class="form-control" placeholder="Height in cm" /> </div>
-                                        <div class="col-md-6">  <label>Weight(Kg)</label><input type="number" onchange="GoalRecommendation();" id="Weight" asp-for="Weight" name="Weight" class="form-control" placeholder="Weight in Kgs" /> </div>
+                                        <div class="col-md-6">  <label>Height(m)</label><input  onchange="GoalRecommendation();" id="Height" autocomplete="off" asp-for="Height" name="Height" class="form-control" placeholder="Height in m" /> </div>
+                                        <div class="col-md-6">  <label>Weight(Kg)</label><input type="number" onchange="GoalRecommendation();" autocomplete="off" id="Weight" asp-for="Weight" name="Weight" class="form-control" placeholder="Weight in Kgs" /> </div>
                                     </div>
                                 </div>
                                 <div id="step-3" class="">
@@ -90,7 +90,7 @@
                                         <h4 class="p-4">Where do you live?</h4>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12"> <label>Place</label> <input type="text" asp-for="Place" name="Place" class="form-control" placeholder="Name of Place" required> </div>
+                                        <div class="col-md-12"> <label>Place</label> <input type="text" asp-for="Place" name="Place" autocomplete="off" class="form-control" placeholder="Name of Place" required> </div>
 
                                     </div>
                                 </div>
@@ -99,7 +99,7 @@
                                         <h4 class="p-4">What do you do for a living?</h4>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12"> <label>Occupation</label> <input type="text" asp-for="Occupation" name="Occupation" class="form-control" placeholder="Occupation" required> </div>
+                                        <div class="col-md-12"> <label>Occupation</label> <input type="text" asp-for="Occupation" autocomplete="off" name="Occupation" class="form-control" placeholder="Occupation" required> </div>
 
                                     </div>
                                 </div>
